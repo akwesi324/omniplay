@@ -1,4 +1,4 @@
-export type GameCategory = 
+export type GameCategory =
   | 'featured'
   | 'retro_offstore'
   | 'action_combat'
@@ -7,7 +7,7 @@ export type GameCategory =
   | 'racing_sports'
   | 'rpg_roguelike';
 
-export type GameOrigin = 
+export type GameOrigin =
   | 'Off-Store Preserved'
   | 'Retro Arcade'
   | 'App Store Classic'
