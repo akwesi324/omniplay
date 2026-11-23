@@ -76,7 +76,7 @@ export const GameCard: React.FC<GameCardProps> = ({
           </TouchableOpacity>
         )}
 
-        {/* Instant play footprint badge (< 1GB guarantee) */}
+        {/* Instant play footprint badge */}
         <View style={styles.footprintBadge}>
           <Text style={styles.footprintText}>⚡ {game.sizeMb} MB</Text>
         </View>
@@ -88,7 +88,7 @@ export const GameCard: React.FC<GameCardProps> = ({
           {game.title}
         </Text>
         <Text style={styles.tagline} numberOfLines={2}>
-          {game.tagline || game.description}
+          {game.description}
         </Text>
 
         <View style={styles.metaRow}>

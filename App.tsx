@@ -10,7 +10,7 @@ import {
   Image,
 } from 'react-native';
 import { Game, UserProfile } from './src/types/game';
-import { ALL_GAMES, GAME_CATEGORIES } from './src/data/gamesCatalog';
+import { GAMES_CATALOG, CATEGORIES_METADATA } from './src/data/gamesCatalog';
 import { StorageService } from './src/services/storageService';
 import { HeaderBar } from './src/components/HeaderBar';
 import { CategoryRail } from './src/components/CategoryRail';
@@ -66,7 +66,7 @@ export default function App() {
 
   // Filtered games based on activeTab and searchQuery
   const getFilteredGames = (): Game[] => {
-    let list: Game[] = ALL_GAMES;
+    let list: Game[] = GAMES_CATALOG;
 
     if (searchQuery.trim().length > 0) {
       const q = searchQuery.toLowerCase();
@@ -74,7 +74,7 @@ export default function App() {
         (g: Game) =>
           g.title.toLowerCase().includes(q) ||
           g.category.toLowerCase().includes(q) ||
-          (g.tagline && g.tagline.toLowerCase().includes(q)) ||
+          g.description.toLowerCase().includes(q) ||
           g.origin.toLowerCase().includes(q)
       );
     }
@@ -95,7 +95,8 @@ export default function App() {
   };
 
   const filteredGames = getFilteredGames();
-  const featuredGame: Game = ALL_GAMES.find((g: Game) => g.featured) || ALL_GAMES[0];
+  const featuredGame: Game =
+    GAMES_CATALOG.find((g: Game) => g.category === 'featured') || GAMES_CATALOG[0];
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -127,7 +128,7 @@ export default function App() {
               activeOpacity={0.7}
             >
               <Text style={[styles.tabText, activeTab === 'all' && styles.tabTextActive]}>
-                🎮 ALL GAMES ({ALL_GAMES.length})
+                🎮 ALL GAMES ({GAMES_CATALOG.length})
               </Text>
             </TouchableOpacity>
 
@@ -161,7 +162,7 @@ export default function App() {
               </Text>
             </TouchableOpacity>
 
-            {GAME_CATEGORIES.map((cat: { id: string; name: string; icon: string; description: string }) => (
+            {CATEGORIES_METADATA.map((cat) => (
               <TouchableOpacity
                 key={cat.id}
                 style={[styles.tabPill, activeTab === cat.id && styles.tabPillActive]}
@@ -169,7 +170,7 @@ export default function App() {
                 activeOpacity={0.7}
               >
                 <Text style={[styles.tabText, activeTab === cat.id && styles.tabTextActive]}>
-                  {cat.icon} {cat.name.toUpperCase()}
+                  {cat.label.toUpperCase()}
                 </Text>
               </TouchableOpacity>
             ))}
@@ -202,7 +203,7 @@ export default function App() {
 
                 <Text style={styles.heroTitle}>{featuredGame.title}</Text>
                 <Text style={styles.heroTagline} numberOfLines={2}>
-                  {featuredGame.tagline || featuredGame.description}
+                  {featuredGame.description}
                 </Text>
 
                 <View style={styles.heroActions}>
@@ -236,19 +237,19 @@ export default function App() {
                 title="Preserved Off-Store Classics"
                 icon="💾"
                 description="Iconic titles preserved and playable without store limits"
-                games={ALL_GAMES.filter((g: Game) => g.origin === 'Off-Store Preserved')}
+                games={GAMES_CATALOG.filter((g: Game) => g.origin === 'Off-Store Preserved')}
                 favorites={favorites}
                 onPlay={handlePlayGame}
                 onToggleFavorite={handleToggleFavorite}
               />
 
               {/* Rails per Category */}
-              {GAME_CATEGORIES.map((cat: { id: string; name: string; icon: string; description: string }) => {
-                const catGames = ALL_GAMES.filter((g: Game) => g.category === cat.id);
+              {CATEGORIES_METADATA.map((cat) => {
+                const catGames = GAMES_CATALOG.filter((g: Game) => g.category === cat.id);
                 return (
                   <CategoryRail
                     key={cat.id}
-                    title={cat.name}
+                    title={cat.label}
                     icon={cat.icon}
                     description={cat.description}
                     games={catGames}
@@ -270,7 +271,7 @@ export default function App() {
                     ? 'Saved Favorites'
                     : activeTab === 'off-store'
                     ? 'Off-Store Preserved Titles'
-                    : GAME_CATEGORIES.find((c: { id: string }) => c.id === activeTab)?.name}
+                    : CATEGORIES_METADATA.find((c) => c.id === activeTab)?.label}
                 </Text>
                 <Text style={styles.filterCount}>{filteredGames.length} titles found</Text>
               </View>

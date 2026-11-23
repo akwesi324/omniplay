@@ -58,7 +58,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({
         registeredDate: currentUser?.registeredDate || new Date().toISOString().split('T')[0],
         totalGamesPlayed: currentUser?.totalGamesPlayed || 0,
         savedStatesCount: currentUser?.savedStatesCount || 0,
-        favorites: currentUser?.favorites || [],
       };
 
       await StorageService.saveUserProfile(updatedUser);
