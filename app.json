@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "OmniPlay - Universal Arcade",
+    "slug": "omniplay",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0A0B10",
+    "splash": {
+      "backgroundColor": "#0A0B10"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.omniplay.app"
+    },
+    "android": {
+      "package": "com.omniplay.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0A0B10",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": ["VIBRATE", "INTERNET"],
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    }
+  }
+}
