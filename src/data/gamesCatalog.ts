@@ -1,4 +1,13 @@
 import { Game, GameCategory } from '../types/game';
+import {
+  HTML_PACMAN,
+  HTML_HANGAROO,
+  HTML_DLS_2026,
+  HTML_WWE_IMMORTALS,
+  HTML_INJUSTICE_1,
+  HTML_INJUSTICE_2,
+  HTML_MORTAL_KOMBAT,
+} from './gameEngines';
 
 // Embedded 60 FPS Canvas Game Engines for Full Offline & Instant Gaming Experience
 
